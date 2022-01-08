@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Фильмы
+{% endblock %}
+{% block color %}
+#ad40ff
+{% endblock %}
+{% block content %}
+<div class="m">
+
+<div class="movies">
+<h1>Фильмы</h1>
+    {% for i in movies %}
+    <a href="{{ i.get_absolute_url }}"  class="h">
+    <div data-tilt data-tilt-perspective="1400"  class = "movie">
+        <img src="{{ i.poster.url }}">
+        <h4> {{i.title}} </h4>
+        <h6> {{i.tagline}} </h6>
+
+
+    </div>
+    </a>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

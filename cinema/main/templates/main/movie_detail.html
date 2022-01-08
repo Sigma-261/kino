@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+{{movie.title}}
+{% endblock %}
+{% block color %}
+#ad40ff
+{% endblock %}
+{% block content %}
+<div class="m">
+    <div class="movies">
+        <div class="desc">
+            <div class="movie-one">
+                <img src="{{ movie.poster.url }}">
+            </div>
+            <div>
+                <h1>{{movie.title}}</h1>
+            <p><b>Дата выхода: </b>{{movie.year}}</p>
+            <p><b>Страна: </b>{{movie.country}}</p>
+            <p><b>Режиссер: </b>
+            {% for director in movie.directors.all %}
+                <a href="{{ director.get_absolute_url }}">
+                    {{director.name}}
+                </a>
+            {% endfor %}
+            </p>
+            <p><b>Актеры: </b>
+            {% for actor in movie.actors.all %}
+                <a href="{{ actor.get_absolute_url }}">
+                    {{actor.name}}
+                </a>
+            {% endfor %}
+            </p>
+            <p><b>Жанры: </b>
+            {% for genre in movie.genres.all %}
+                {{genre.name}}
+            {% endfor %}
+            </p>
+            <p><b>Мировая премьера: </b>{{movie.world_premiere}}</p>
+            <p><b>Бюджет: </b>${{movie.budget}}</p>
+            <p><b>Сборы в США: </b>${{movie.fees_in_usa}}</p>
+            <p><b>Сборы в Мире: </b>${{movie.fess_in_world}}</p>
+            </div>
+
+        </div>
+        <div class="desc1">
+            <h1></h1>
+            <h1></h1>
+            <h1>Описание</h1>
+            <p>{{movie.description}}</p>
+        </div>
+
+        <div class="desc1">
+            <h1>Кадры из фильма</h1>
+            {% for image in movie.movieshots_set.all %}
+                <img src="{{ image.image.url }}" class="img-shots" alt = "{{image.description}}">
+            {% endfor %}
+        </div>
+        <div class="desc1">
+            <h1>Сеансы</h1>
+            <div class="desc3">
+                {% for i in "001112220000111222000011122200001112220011111222221111122222" %}
+                    {% if i == "0" %}
+                        <button class="button button0" style="vertical-align: middle" value={{i}}>{{i}}</button>
+                    {% elif i == "1" %}
+                        <button class="button button1" style="vertical-align: middle" value={{i}}>{{i}}</button>
+                    {% elif i == "2" %}
+                        <button class="button button2" style="vertical-align: middle" value={{i}}>{{i}}</button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="reviews">
+            <h1>Отзывы</h1>
+            <div class="desc2">
+                <form action="{% url 'add_review' movie.id %}" class="decor" method="post" id="formReview">
+                {% csrf_token %}
+                    <input type="hidden" name="parent" id="contactparent" value="">
+                <div class="form-left-decoration"></div>
+                <div class="form-right-decoration"></div>
+                <div class="circle"></div>
+                <div class="form-inner">
+                    <h3>Написать нам</h3>
+                    <input type="text" placeholder="Username" name="name">
+                    <input type="email" placeholder="Email" name="email">
+                    <textarea placeholder="Сообщение..." rows="3" id="contactcomment" name="text"></textarea>
+                    <input type="submit" value="Отправить">
+                </div>
+            </form>
+            </div>
+
+            <div class="desc2">
+                {% for review in movie.get_review %}
+                <div class="review">
+                    <h5>{{review.name}}</h5>
+                    <h6>{{review.text}}</h6>
+                    <a href="#formReview" onclick="addReview('{{ review.name }}','{{ review.id }}')">Ответить</a>
+                    {% for rev in review.reviews_set.all %}
+                    <div class="review1">
+                        <h5>{{rev.name}}</h5>
+                        <h6>{{rev.text}}</h6>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+        </div>
+
+
+</div>
+<script>
+    function addReview(name, id){
+        document.getElementById("contactparent").value = id;
+        document.getElementById("contactcomment").innerText = `${name}, `;
+    }
+</script>
+{% endblock %}

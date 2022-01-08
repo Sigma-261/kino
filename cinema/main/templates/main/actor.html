@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+{{actor.name}}
+{% endblock %}
+{% block color %}
+#ad40ff
+{% endblock %}
+{% block content %}
+<div class="m">
+    <div class="movies">
+        <div class="desc">
+            <div class="movie-one">
+                <img src="{{ actor.image.url }}">
+            </div>
+            <div>
+                <h1>{{actor.name}}</h1>
+            <p><b>Возраст: </b>{{actor.age}} лет</p>
+            <p><b>Режиссер: </b>
+            {% for movie in actor.film_director.all %}
+                {{movie.title}}
+            {% endfor %}
+            </p>
+            <p><b>Актер: </b>
+            {% for movie in actor.film_actor.all %}
+                {{movie.title}}
+            {% endfor %}
+            </p>
+
+        </div>
+        <div class="desc1">
+            <h1>О нем</h1>
+            <p>{{actor.description}}</p>
+        </div>
+
+
+
+</div>
+<script>
+    function addReview(name, id){
+        document.getElementById("contactparent").value = id;
+        document.getElementById("contactcomment").innerText = `${name}, `;
+    }
+</script>
+{% endblock %}
