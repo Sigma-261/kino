@@ -3,13 +3,30 @@
 О нас
 {% endblock %}
 {% block color %}
-#066052
+#800000
 {% endblock %}
 {% block content %}
 <div class="m">
 <div class="movies">
-<h1>О нас</h1>
-    <p>ТУТ БУДЕТ О НАС</p>
+<h1>Расписание</h1>
+    {% for i in sessions.all %}
+    <div class = "movie-session">
+        <div  class="movie-detail-session" >
+            <img class="img-session" src="{{ i.movie_name.poster.url }}">
+        </div>
+
+        <div class="movie-param-session">
+            <a class="movie-session-link" href="{{ i.movie_name.get_absolute_url }}">
+                {{i.movie_name}}
+            </a>
+            <p><b>Дата проката:</b></p>
+            <p>{{i.date}}</p>
+            <p><b>Время проката:</b></p>
+            <p>{{i.times}}</p>
+
+        </div>
+    </div>
+    {% endfor %}
 </div>
 </div>
 {% endblock %}

@@ -4,14 +4,14 @@
 {{movie.title}}
 {% endblock %}
 {% block color %}
-#ad40ff
+#5d3a8e
 {% endblock %}
 {% block content %}
 <div class="m">
     <div class="movies">
         <div class="desc">
             <div class="movie-one">
-                <img src="{{ movie.poster.url }}">
+                <img class="img-movie" src="{{ movie.poster.url }}">
             </div>
             <div>
                 <h1>{{movie.title}}</h1>
@@ -55,20 +55,6 @@
             {% for image in movie.movieshots_set.all %}
                 <img src="{{ image.image.url }}" class="img-shots" alt = "{{image.description}}">
             {% endfor %}
-        </div>
-        <div class="desc1">
-            <h1>Сеансы</h1>
-            <div class="desc3">
-                {% for i in "001112220000111222000011122200001112220011111222221111122222" %}
-                    {% if i == "0" %}
-                        <button class="button button0" style="vertical-align: middle" value={{i}}>{{i}}</button>
-                    {% elif i == "1" %}
-                        <button class="button button1" style="vertical-align: middle" value={{i}}>{{i}}</button>
-                    {% elif i == "2" %}
-                        <button class="button button2" style="vertical-align: middle" value={{i}}>{{i}}</button>
-                    {% endif %}
-                {% endfor %}
-            </div>
         </div>
 
         <div class="reviews">

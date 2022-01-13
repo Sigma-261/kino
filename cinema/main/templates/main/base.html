@@ -9,12 +9,25 @@
     <script
   src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <style>
-        img
-        {
-            border-radius: 25px;
+        img{
+
             pointer-events: none;
             width:338px;
             height:450px;
+        }
+        img.img-posters
+        {
+            border-radius:  20px 20px 0px 0px;
+            pointer-events: none;
+            width:358px;
+            height:470px;
+        }
+        img.img-session
+        {
+            border-radius:  20px;
+            pointer-events: none;
+            width:179px;
+            height:235px;
         }
         img.img-shots
         {
@@ -29,6 +42,12 @@
             width:344px;
             height:250px;
         }
+        img.img-movie
+        {
+            border-radius: 25px;
+            width:338px;
+            height:450px;
+        }
         a.h
         {
             color: white;
@@ -37,32 +56,30 @@
         {
             color: white;
         }
+        a.movie-session-link
+        {
+            color: black;
+        }
+        a.movie-session-link:hover
+        {
+            color: black;
+        }
         div.container1
         {
-            background-color: black;
+            background-color: {% block color %}{% endblock %};
             padding: 5px;
             height: 50px;
-            color: white;
+            color: black;
             position: relative;
         }
 
         div.container2
         {
             position: relative;
-            background: url("{% static 'img/fon.jpg' %}");
+            background-color: #cde7ff;
             background-size: 100%
         }
-        div.container2:after
-        {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,.5);
-            z-index: 2;
-        }
+
 
         div.review
         {
@@ -72,7 +89,7 @@
             margin-right: 20px;
             margin-top: 20px;
             padding: 10px;
-            background-color: #aa40ff;
+            background-color: #5d3a8e;
             perspective: 1000px;
             position: relative;
 
@@ -122,17 +139,53 @@
             margin-left: 20px;
             margin-right: 20px;
             margin-top: 20px;
-            padding: 10px;
-            background-color: #ad40ff;
+
+            background-color: #5d3a8e;
             float: left;
             overflow:auto;
             transform-style: preserve-3d;
             perspective: 1000px;
             position: relative;
             width:358px;
-            height:560px;
+            height:580px;
+        }
+        div.movie-param-session p{
+        color: white;
+        }
+        div.movie-session
+        {
+            border-radius: 25px;
+            margin-bottom: 10px;
+            margin-left: 19.5px;
+            margin-right: 19.5px;
+            margin-top: 10px;
+            padding:5px;
+            background-color: #800000;
+            float: left;
+            overflow:auto;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            position: relative;
+            width:360px;
+            height:245px;
+        }
+        div.movie-detail-poster
+        {
+            margin-top: 5px;
+            padding-top: 5px;
+            overflow:auto;
+            position: relative;
+
+        }
+        div.movie-param-session{
+        margin-left: 190px;
         }
 
+        div.movie-detail-session
+        {
+            float: left;
+
+        }
         div.movie-one
         {
             border-radius: 25px;
@@ -152,12 +205,12 @@
             border-radius: 25px;
             position: relative;
             z-index: 3;
-            background: rgba(0,0,0,.8);
+            color: black;
             overflow:auto;
             margin-left: 160px;
             margin-right: 160px;
             margin-top: 100px;
-
+            background: white;
         }
         div.desc2
         {
@@ -212,28 +265,29 @@
         }
         div.movies h1
         {
-            color: white;
+            color: black;
             padding-left: 20px;
             padding-top: 20px;
         }
 
         div.movies p
         {
-            color: white;
+            color: black;
         }
 
         div.promotions h1
         {
-            color: white;
+            color: black;
             padding-left: 20px;
             padding-top: 20px;
         }
         div.promotions
         {
+            color: white;
             border-radius: 25px;
             position: relative;
             z-index: 3;
-            background: rgba(0,0,0,.8);
+            background: white;
             overflow:auto;
             margin-left: 160px;
             margin-right: 160px;
@@ -262,6 +316,7 @@
 
         div.param p
         {
+
             float: left;
             margin-left: 10px;
             margin-right: 10px;
@@ -305,7 +360,6 @@
         a.nav-link
         {
             color: white;
-            background: #ad40ff;
             border-radius: 10px;
             margin-left: 4px;
             margin-right: 4px;
@@ -333,7 +387,7 @@
    max-width: 400px;
    margin-left: 10px;
    margin-bottom: 10px;
-   background: #ad40ff;
+   background: #5d3a8e;
    border-radius: 30px;
 }
 
@@ -426,19 +480,19 @@ button.button1 input:checked:hover + span {
           <li><a href="{% url 'movies' %}" class="nav-link">Фильмы</a></li>
           <li><a href="{% url 'schedule' %}" class="nav-link">Расписание</a></li>
           <li><a href="{% url 'promotions' %}" class="nav-link">Акции и скидки</a></li>
-          <li><a href="{% url 'about' %}" class="nav-link">О нас</a></li>
         </ul>
 
-        <form class="search">
-          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Search">
+        <form action="{% url 'search_result' %}" method="get" class="search">
+          <input type="text" class="form-control" placeholder="Поиск..." name="q" aria-label="Search">
         </form>
+
 
         <div class="dropdown">
             <span>Категории</span>
             <div class="dropdown-content">
             <ul>
                 {% for category in categories %}
-                    <li><a href="/">{{ category.name }}</a></li>
+                    <li><a href="{% url 'search_result' %}?q={{ category.url }}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
             </div>

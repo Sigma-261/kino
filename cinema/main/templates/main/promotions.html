@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+Акции
+{% endblock %}
+{% block color %}
+#ff4612
+{% endblock %}
+{% block content %}
+
+<div class="m">
+<div class = "promotions">
+    <h1>Акции</h1>
+    {% for i in promotions %}
+    <div data-tilt data-tilt-perspective="1000" data-tilt-glare="true" data-tilt-maxGlare="0.2" class = "promotion">
+        <img class="img-promotions" src="{% static 'img/' %}{{i.name_img}}">
+        <h5>{{i.title}}</h5>
+        <h6>{{i.task}}</h6>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

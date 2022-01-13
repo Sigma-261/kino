@@ -8,6 +8,7 @@ class Promotions(models.Model):
     title = models.CharField('Название', max_length=50)
     task = models.TextField('Описание')
     name_img = models.TextField('Название картинки')
+    date = models.TextField('Дата акции')
 
     def __str__(self):
         return self.title
@@ -135,3 +136,29 @@ class Reviews(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
+
+class CinemaHall(models.Model):
+    """Кинозал"""
+    number = models.PositiveSmallIntegerField("Номер", default=0)
+    place_string = models.CharField("Строка мест", max_length=500)
+
+    def __str__(self):
+        return str(self.number)
+
+    class Meta:
+        verbose_name = "Кинозал"
+        verbose_name_plural = "Кинозалалы"
+
+class Session(models.Model):
+    """Сеанс"""
+    date = models.DateField("Дата сеанса", default=date.today)
+    times = models.CharField("Времена сеанса", max_length=500)
+    movie_name = models.ForeignKey(Movie,verbose_name="Фильм", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.movie_name} - {self.date}"
+
+
+    class Meta:
+        verbose_name = "Сеанс"
+        verbose_name_plural = "Сеансы"
